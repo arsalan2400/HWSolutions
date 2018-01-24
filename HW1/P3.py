@@ -1,38 +1,26 @@
-# Question 3: Fibonacci sequence
-
+# Problem 3. Iterative and recursive operations.
+# Write an iterative function and a recursive function that
+# computes the sum of all numbers from 1 to n, where n is given as parameter.
+# Test both functions for n = 100.
 
 # iterative version:
-def fibonacci_iterative(n):
-    n_minus_1 = 1
-    n = 1
+def sum_iterative(n):
 
-    for i in range(n):
-        result =
-    if n == 0 or n ==1:
-        return 1
-    else:
-        return fibonacci_recursive(n-1) + fibonacci_recursive(n-2)
+    sum = 0
+    for i in range(1, n+1):
+        sum += i
+    return sum
+
 
 # recursive version:
-def fibonacci_recursive(n):
-    if n == 0 or n ==1:
+def sum_recursive(n):
+    if n == 1:
         return 1
     else:
-        return fibonacci_recursive(n-1) + fibonacci_recursive(n-2)
+        return n + sum_recursive(n-1)
 
 
-
-n = int(input('Enter # of terms:'))
-print('Fibonacci sequence:')
-print(fibonacci(n))
-
-# function
-def fibFunction(n):
-    if n==0:
-        return 0
-    elif n==1:
-        return 1
-    else:
-        return fibFunction(n-1) + fibFunction(n-2)
-
-print(fibFunction(23))
+# test iterative version of sum
+print(sum_iterative(100))
+# test recursive version of sum
+print(sum_recursive(100))
