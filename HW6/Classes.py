@@ -2,7 +2,7 @@ import numpy as np
 import scr.StatisticalClasses as Stat
 
 
-class Game(object):
+class Game:
     def __init__(self, id, prob_head):
         self._id = id
         self._rnd = np.random
@@ -14,7 +14,7 @@ class Game(object):
 
         count_tails = 0  # number of consecutive tails so far, set to 0 to begin
 
-        ## flip the coin 20 times
+        # flip the coin 20 times
         for i in range(n_of_flips):
 
             # in the case of flipping a heads

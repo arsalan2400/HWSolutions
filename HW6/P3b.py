@@ -2,7 +2,7 @@ import HW6.Classes as Cls
 import scr.FigureSupport as figureLibrary
 
 # create a multiple game sets
-multipleGameSets= Cls.MultipleGameSets(ids=range(1000), prob_head=0.5, n_games_in_a_set=10)
+multipleGameSets=Cls.MultipleGameSets(ids=range(1000), prob_head=0.5, n_games_in_a_set=10)
 # simulate all game sets
 multipleGameSets.simulation()
 
@@ -13,9 +13,9 @@ print('Projected mean reward',
 print('95% projection interval of average rewards',
       multipleGameSets.get_PI_mean_reward(0.05))
 
-#plot
+# plot
 figureLibrary.graph_histogram(
-    observations=multipleGameSets.get_all_mean_rewards(),
+    data=multipleGameSets.get_all_mean_rewards(),
     title='Histogram of Mean Rewards obtained from the transit-state simulation model',
     x_label='Mean Rewards',
     y_label='Count')

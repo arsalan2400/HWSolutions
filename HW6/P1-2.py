@@ -1,7 +1,7 @@
 import HW6.Classes as Cls
 
 # expected rewards from 1000 games
-setOfGames = Cls.SetOfGames(prob_head=0.5, n_games=1000)
+setOfGames = Cls.SetOfGames(id=1, prob_head=0.5, n_games=1000)
 outcomes = setOfGames.simulation()
 
 ##### Problem 1 #####

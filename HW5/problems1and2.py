@@ -78,7 +78,7 @@ print("The average expected reward is:", trial.get_ave_reward())
 
 # Problem 1: Create histogram of winnings
 figureLibrary.graph_histogram(
-    observations=trial.get_reward_list(),
+    data=trial.get_reward_list(),
     title="Histogram of Rewards from 1000 Games",
     x_label="Game Rewards",
     y_label="Frequency")
