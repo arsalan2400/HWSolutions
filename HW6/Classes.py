@@ -51,21 +51,18 @@ class SetOfGames:
             game.simulate(20)
             # store the reward
             self._gameRewards.append(game.get_reward())
-            #return self._gameRewards
 
-        # create a list of losses (1 is loss, 0 otherwise)
+        # create a list of losses (1 is loss, 0 is win)
         for k in self._gameRewards:
             if k < 0:
-                i=1
-                self._countLoss_list.append(i)
+                self._countLoss_list.append(1)
             else:
-                i=0
-                self._countLoss_list.append(i)
+                self._countLoss_list.append(0)
 
         return SetOfGamesOutcomes(self)
 
     # return vector of game rewards
-    def get_reward_list(self):
+    def get_rewards(self):
         return self._gameRewards
 
     # return vector of losses
@@ -74,15 +71,23 @@ class SetOfGames:
 
 
 class SetOfGamesOutcomes:
-    def __init__(self, simulated_cohort):
+    def __init__(self, set_of_games):
 
-        self._simulatedCohort = simulated_cohort
+        self._rewards = set_of_games.get_rewards()
         # game rewards summary statistics
         self._sumStat_gameRewards = \
-            Stat.SummaryStat('Reward list', self._simulatedCohort.get_reward_list())
+            Stat.SummaryStat('Reward list', set_of_games.get_rewards())
         # loss probability summary statistics
         self._sumStat_gameProbLoss = \
-            Stat.SummaryStat('Probability of loss', self._simulatedCohort.get_loss_list())
+            Stat.SummaryStat('Probability of loss', set_of_games.get_loss_list())
+
+    def get_rewards(self):
+        return self._rewards
+
+    # sum of rewards from all games
+    def get_total_reward(self):
+        """ return the sum of rewards from all games"""
+        return self._sumStat_gameRewards.get_total()
 
     # average reward across all games
     def get_ave_reward(self):
@@ -111,52 +116,35 @@ class SetOfGamesOutcomes:
 
 
 class MultipleGameSets:
-    """ representing multiple sets of games"""
+    """ representing multiple sets of games (for the analysis from the gambler's perspective """
     def __init__(self, ids, prob_head, n_games_in_a_set):
-        self._ids=ids   # ids of game sets
-        self._probs_head=prob_head  # probability of head in each coin flip
-        self._n_games_in_a_set=n_games_in_a_set # number of games in each set
+        self._ids = ids   # ids of game sets
+        self._probs_head = prob_head  # probability of head in each coin flip
+        self._n_games_in_a_set = n_games_in_a_set  # number of games in each set
 
-        self._gameRewards=[] # create an empty list where rewards will be stored
-        self._meanGameReward=[] # create an empty list where the means will be stored
-        self._sumStat_meanGameReward = None
+        self._totalRewards = [] # create an empty list where rewards will be stored
+        self._sumStat_totalRewards = None
 
     def simulation(self):
         for i in self._ids:
             # create a new set of games
-            setOfGames=SetOfGames(i, self._probs_head, self._n_games_in_a_set)
+            set_of_games = SetOfGames(i, self._probs_head, self._n_games_in_a_set)
             # simulate the set of games using 20 flips
-            setOfGames.simulation()
-            # store the rewards
-            self._gameRewards.append(setOfGames.get_reward_list())
-            # store average of the reward
-            self._meanGameReward.append(setOfGames.simulation().get_ave_reward())
+            outcomes = set_of_games.simulation()
+            # store the total reward from this game set
+            self._totalRewards.append(outcomes.get_total_reward())
 
-        # summary statistics of mean rewards
-        self._sumStat_meanGameReward=Stat.SummaryStat("Mean Rewards", self._meanGameReward)
+        # summary statistics of total rewards
+        self._sumStat_totalRewards = Stat.SummaryStat("Mean Rewards", self._totalRewards)
 
-    # max mean reward of a specific game
-    def get_setOfGames_mean_rewards(self, index):
-        return self._meanGameReward[index]
+    # get the mean of total rewards
+    def get_mean_total_reward(self):
+        return self._sumStat_totalRewards.get_mean()
 
-    # CI of mean reward of a specific game
-    def get_setOfGames_CI_mean_rewards(self, index, alpha):
-        stats = Stat.SummaryStat('', self._gameRewards[index])
-        return stats.get_t_CI(alpha)
+    # get prediction interval for total reward
+    def get_PI_total_reward(self, alpha):
+        return self._sumStat_totalRewards.get_PI(alpha)
 
-    # get list of all mean rewards
-    def get_all_mean_rewards(self):
-        return self._meanGameReward
-
-    # get the overall mean (so the mean of the means)
-    def get_overall_mean_reward(self):
-        return self._sumStat_meanGameReward.get_mean()
-
-    # get prediction interval for reward to a specific cohort
-    def get_cohort_PI_reward(self, index, alpha):
-        stats = Stat.SummaryStat('', self._gameRewards[index])
-        return stats.get_PI(alpha)
-
-    # get prediction interval for the overall mean reward
-    def get_PI_mean_reward(self, alpha):
-        return self._sumStat_meanGameReward.get_PI(alpha)
+    # get all total rewards
+    def get_all_total_rewards(self):
+        return self._totalRewards

@@ -1,4 +1,5 @@
 import HW6.Classes as Cls
+import scr.FigureSupport as figureLibrary
 
 # expected rewards from 1000 games
 setOfGames = Cls.SetOfGames(id=1, prob_head=0.5, n_games=1000)
@@ -15,5 +16,9 @@ print("The 95% CI of loss probability:", outcomes.get_CI_probLoss(0.05))
 print("If we run our simulation many times, "
       "on average 95% of the confidence intervals generated will capture the true mean.")
 
-
-
+# plot
+figureLibrary.graph_histogram(
+    data=outcomes.get_rewards(),
+    title="Histogram of rewards",
+    x_label='Rewards',
+    y_label='Count')

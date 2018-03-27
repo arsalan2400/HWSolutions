@@ -10,7 +10,7 @@ print("The 95% CI of expected reward is:", test.get_CI_reward(0.05))
 
 # Create histogram of winnings
 figureLibrary.graph_histogram(
-    data=trial.get_reward_list(),
+    data=trial.get_rewards(),
     title="Histogram of Rewards from 1000 Games obtained from the steady-state simulation model",
     x_label="Game Rewards",
     y_label="Frequency")

@@ -8,15 +8,15 @@ multipleGameSets.simulation()
 
 # print projected mean reward
 print('Projected mean reward',
-      multipleGameSets.get_overall_mean_reward())
+      multipleGameSets.get_mean_total_reward())
 # print projection interval
 print('95% projection interval of average rewards',
-      multipleGameSets.get_PI_mean_reward(0.05))
+      multipleGameSets.get_PI_total_reward(0.05))
 
 # plot
 figureLibrary.graph_histogram(
-    data=multipleGameSets.get_all_mean_rewards(),
-    title='Histogram of Mean Rewards obtained from the transit-state simulation model',
+    data=multipleGameSets.get_all_total_rewards(),
+    title="Histogram of gambler's total reward from playing the gam 10 times",
     x_label='Mean Rewards',
     y_label='Count')
 
