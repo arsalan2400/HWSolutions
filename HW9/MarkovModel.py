@@ -7,7 +7,6 @@ import HW9.InputData as Data
 # patient class simulates patient, patient monitor follows patient, cohort simulates a cohort,
 #  cohort outcome extracts info from simulation and returns it back
 
-
 class Patient:  # when you store in self then all the things in that class have access to it
     def __init__(self, id, parameters):
         """ initiates a patient
@@ -111,6 +110,7 @@ class PatientStateMonitor:
 
     def get_num_of_STROKE(self):
         return self._strokecount
+
 
 class Cohort:
     def __init__(self, id, therapy):

@@ -7,7 +7,7 @@ import scr.FigureSupport as Figs
 # create and cohort
 cohort = MarkovCls.Cohort(
     id=0,
-    therapy=P.Therapies.ANTICOAG)
+    therapy=P.Therapies.NONE)
 
 simOutputs = cohort.simulate()
 
@@ -27,7 +27,6 @@ Figs.graph_histogram(
     y_label='Counts',
     bin_width=1
 )
-
 
 # graph histogram of number of strokes
 Figs.graph_histogram(
